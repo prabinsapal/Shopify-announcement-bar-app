@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "510021bdc75d662047fc40c1c02e4dac"
-application_url = "https://fiber-filled-appropriations-halifax.trycloudflare.com"
+application_url = "https://burning-citizens-satisfactory-broader.trycloudflare.com"
 embedded = true
 name = "announcement-remix-app"
 handle = "announcement-remix-app"
@@ -23,9 +23,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://fiber-filled-appropriations-halifax.trycloudflare.com/auth/callback",
-  "https://fiber-filled-appropriations-halifax.trycloudflare.com/auth/shopify/callback",
-  "https://fiber-filled-appropriations-halifax.trycloudflare.com/api/auth/callback"
+  "https://burning-citizens-satisfactory-broader.trycloudflare.com/auth/callback",
+  "https://burning-citizens-satisfactory-broader.trycloudflare.com/auth/shopify/callback",
+  "https://burning-citizens-satisfactory-broader.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

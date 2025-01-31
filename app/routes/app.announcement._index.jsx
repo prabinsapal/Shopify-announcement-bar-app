@@ -20,6 +20,7 @@ import { json, useLoaderData, useSubmit } from "@remix-run/react";
 
 import db from '../db.server';
 import { useEffect, useState } from "react";
+import AnnouncementDetail from "../components/announcement/detail";
 
 
 // This is a get request
@@ -75,6 +76,30 @@ export async function action({ request, params }) {
 
             return json({ message: "Data Saved", data: savedData}, {status: 200});
         }
+        else if(requestMethod == "PUT") {
+            const data = {
+                ...Object.fromEntries(await request.formData()),
+                shop,
+            }
+
+            console.log("data ----- ", data);
+
+            if (!data.title || !data.description) {
+                return json({ message: "Title and description is required."}, { status: 422});
+            }
+
+            const savedData = await db.announcement.update({
+                where: {
+                    id: data.id
+                },
+                data: {
+                    title: data.title,
+                    description: data.description
+                }
+            })
+
+            return json({ message: "Data Updated", data: savedData}, {status: 200});
+        }
 
         
     } catch(error) {
@@ -90,6 +115,7 @@ export default function AnnouncementPage() {
     const [dataAvailable, setDataAvailable] = useState(false);
     const [showCreateForm, setCreateForm] = useState(false);
     const [formData, setFormData] = useState(announcementData);
+    const [showEditForm, setEditForm] = useState(false);
 
     const submit = useSubmit();
 
@@ -103,6 +129,19 @@ export default function AnnouncementPage() {
             shopify.toast.show("API Error");
         }
     }
+
+    function handleUpdate()
+    {
+        try {
+            console.log(" handle update ");
+            submit(formData, { action: "/app/announcement", method: "PUT"})
+            shopify.toast.show("Data Updated to database")
+        } catch(error) {
+            console.log("API Error ", error)
+            shopify.toast.show("API Error");
+        }
+    }
+
     
     useEffect(() => {
         if (Object.keys(announcementData).length !== 0) {
@@ -134,31 +173,7 @@ export default function AnnouncementPage() {
                 {
                     dataAvailable ?
                     <>
-                        <Card>
-                        <BlockStack gap="400">
-                            <Text as="h2" variant="headingSm">
-                                Announcement Detail
-                            </Text>
-
-                            
-                                <Box>
-                                    <Text as="h3">
-                                        Title
-                                    </Text>
-                                    <Text as="p">
-                                        {formData.title}
-                                    </Text>
-                                </Box>
-                                <Box>
-                                <Text as="h3">
-                                        Description
-                                    </Text>
-                                    <Text as="p">
-                                        {formData.description}
-                                    </Text>
-                                </Box>
-                            </BlockStack>
-                        </Card>
+                        <AnnouncementDetail formData={formData} showEditForm={showEditForm} />
                     </>
                     :
                     <>

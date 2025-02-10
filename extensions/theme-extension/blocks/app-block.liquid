@@ -1,0 +1,35 @@
+<div style="background-color:{{ block.settings.colour }}">
+  <div id="announcement-bar"></div>
+</div>
+
+<script async>
+ async function fetchData() {
+   const appUrl = "/apps/abc-extension-proxy-test/extension"
+
+   const response = await fetch(appUrl);
+   const data = await response.json();
+
+   const responseTemplate = `<h1 style="text-align:center;">${data.title}</h1>
+   <p>${data.description}</p>
+   `;
+
+   const announcementBar = document.getElementById("announcement-bar");
+   announcementBar.innerHTML = responseTemplate;
+ }
+
+
+console.log("Fetching data from server");
+ fetchData();
+</script>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "target": "section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "product", "autofill": true },
+    { "type": "color", "id": "colour", "label": "Star Colour", "default": "#ff0000" }
+  ]
+}
+{% endschema %}
+

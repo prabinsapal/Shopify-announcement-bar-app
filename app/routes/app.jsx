@@ -24,6 +24,7 @@ export default function App() {
         </Link>
         {/* <Link to="/app/additional">Additional page</Link> */}
         <Link to="/app/announcement">Announcement</Link>
+        <Link to="/app/graphql">Product</Link>
       </NavMenu>
       <Outlet />
     </AppProvider>

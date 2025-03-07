@@ -1,8 +1,9 @@
-import { Button, Card, Page } from "@shopify/polaris";
+import { BlockStack, Button, Card, Page } from "@shopify/polaris";
 import { useState } from "react";
 
 export default function MetafieldPage() {
     const [selectedProduct, setSelectedProduct] = useState({});
+    const [deeplinkUrl, setDeeplinkUrl] = useState("https://bs11-store.myshopify.com/admin/themes/current/editor?template=index&addAppBlockId=87e0d91a-e143-4a5f-ac88-a11f9640451e/app-block&target=mainSection");
 
     async function openProductSelector() {
         const selected = await shopify.resourcePicker({
@@ -95,10 +96,36 @@ export default function MetafieldPage() {
     //     }
     //   }
 
+    // App metadata ID
+    // query {
+    //     currentAppInstallation {
+    //       id
+    //     }
+    //   }
+
+    // Create APp MetaData
+    // mutation CreateAppDataMetafield($metafieldsSetInput: [MetafieldsSetInput!]!) {
+    //     metafieldsSet(metafields: $metafieldsSetInput) {
+    //       metafields {
+    //         id
+    //         namespace
+    //         key
+    //         value
+    //       }
+    //       userErrors {
+    //         field
+    //         message
+    //       }
+    //     }
+    //   }
+
     return(
         <Page title="MetaField Page">
             <Card>
-                <Button onClick={openProductSelector}>Select Product</Button>
+                <BlockStack gap={200} inlineAlign="start">
+                    <Button url={deeplinkUrl} variant="primary" target="_">Install app</Button>
+                    <Button onClick={openProductSelector}>Select Product</Button>
+                </BlockStack>
             </Card>
         </Page>
     )
